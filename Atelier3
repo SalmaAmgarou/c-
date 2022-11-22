@@ -1,0 +1,420 @@
+               ///********* Exercice 1 ********* ///
+#include <iostream>
+
+using namespace std;
+
+class A{
+public:
+  void display ()
+  {
+    cout << "La méthode display de la classe A est exécutée\n";
+  }
+};
+
+class B : public A{
+public:
+  void display ()
+  {
+    cout << "La méthode display de la classe B est exécutée\n";
+  }
+};
+
+int main ()
+{
+  B b;
+  b.display();
+  return 0;
+}
+
+
+               ///********* Exercice 2 ********* ///
+#include <iostream>
+
+using namespace std;
+
+class Shape
+{
+protected:
+  float x, y;
+public:
+  Shape(float _x, float _y)
+  {
+    x = _x;
+    y = _y;
+  }
+};
+
+class Rectangle: public Shape
+{
+public:
+  Rectangle(float _x, float _y) : Shape(_x, _y) {}
+
+  float area()
+  {
+    return (x * y);
+  }
+};
+
+class Triangle: public Shape
+{
+public:
+  Triangle(float _x, float _y) : Shape(_x, _y) {}
+
+  float area()
+  {
+    return (x * y / 2);
+  }
+};
+
+int main (){
+
+  Rectangle rectangle(2,3);
+  Triangle triangle(2,3);
+  cout << rectangle.area() << endl;   
+  cout << triangle.area() << endl;    
+  return 0;
+}
+
+
+
+               ///********* Exercice 3 ********* ///  
+
+
+#include <iostream>
+using namespace std;
+
+//**********COMPLEX CLASS************************
+class Complexe{
+
+private:
+ double reel,imag;
+
+public:
+ Complexe(){
+  reel=imag=0;
+ }
+
+ Complexe(double r){
+  reel=r;
+  imag=0;
+ }
+
+ Complexe(double r, double i){
+  reel=r;
+  imag=i;
+ }
+   
+ Complexe(Complexe &obj){
+  reel=obj.reel;
+  imag=obj.imag;
+ }
+
+ Complexe add(Complexe c){
+        Complexe Add;
+  Add.reel = reel + c.reel;
+  Add.imag = imag + c.imag;
+        return Add;
+ }
+ Complexe sub(Complexe c){
+  Complexe Sub;
+  Sub.reel = reel - c.reel;
+  Sub.imag = imag - c.imag;
+  return Sub;
+ }
+ Complexe mult(Complexe c){
+        Complexe Mult;
+  Mult.reel = reel*c.reel - imag*c.imag;
+  Mult.imag = reel*c.imag - c.reel*imag;
+  return Mult;
+ }
+ Complexe div(Complexe c){
+  Complexe Div;
+  Div.reel = (reel*c.reel + imag*c.imag)/(c.reel*c.reel + c.imag*c.imag);
+  Div.imag = (imag*c.reel + reel*c.imag)/(c.reel*c.reel + c.imag*c.imag);
+  return Div;
+ }
+ void print(){
+        cout<<reel<<"+"<<image<<"i"<<endl<<endl;
+ }
+ double getReel() const{
+  return reel;
+ }
+
+ double getImag() const{
+  return imag;
+ }
+
+ void setReel(double re){
+  reel = re;
+
+ }
+
+ void setImag(double im){
+        imag = im;
+ }
+
+};
+
+//***************MAIN***************************
+int main()
+{
+ double reel1,imag1,reel2,imag2;
+
+ cout<<"Entrez le partie réelle du premier nombre: ";
+    cin>>reel1;
+ cout<<"Entrez la partie imaginaire du premier nombre: ";
+ cin>>imag1;
+    Complex obj1(reel1,imag1);
+ obj1.print();
+
+ cout<<" Entrez le partie réelle du deuxième nombre:: ";
+ cin>>reel2;
+ cout<<" Entrez la partie imaginaire du deuxième nombre ";
+    cin>>imag2;
+    Complex obj2(reel2,imag2);
+ obj2.print();
+
+ Complex c;
+ c = obj1.add(obj2);
+ cout<<"Addition est : ("<<c.getReel()<<")+("<<c.getImag()<<")i"<<endl;
+ c= obj1.sub(obj2);
+ cout<<endl<<"Soustraction est : ("<<c.getReel()<<")+("<<c.getImag()<<")i"<<endl;
+
+ c= obj1.mult(obj2);
+ cout<<endl<<"Multiplication est : ("<<c.getReel()<<")+("<<c.getImag()<<")i"<<endl;
+
+ c= obj1.div(obj2);
+ cout<<endl<<"Division est : ("<<c.getReel()<<")+("<<c.getImag()<<")i"<<endl;
+ return 0;
+}
+
+
+
+               ///********* Exercice 4 ********* ///
+               
+ #include <iostream> 
+
+class MyClass 
+{ 
+public: 
+    MyClass(); 
+    ~MyClass(); 
+}; 
+
+MyClass::MyClass() 
+{ 
+    std::cout << "Constructor invoked." << '\n'; 
+} 
+
+MyClass::~MyClass() 
+{ 
+    std::cout << "Destructor invoked." << '\n'; 
+} 
+
+int main() 
+{ 
+    MyClass o; 
+} 
+
+            
+               ///********* Exercice 5 ********* ///
+#include <iostream>
+using namespace std;
+
+class Animal{
+
+public:
+	const char* nom;
+	int age;
+	Animal(const char* monNom) : nom (monNom){};
+	void set_value(int age_value){age = age_value;};	
+};
+
+class Zebra : public Animal{
+public:
+	const char* origine;
+	Zebra (const char* monNom, const char* monOrigine) : Animal (monNom), origin (monOrigine){};
+	void display_info(){cout << "Je suis: "<< name << " , j’ai: " << age << " et je suis de: "<< origine<< endl;};
+
+};
+
+class Dolphin : public Animal{
+public:
+	const char* origine;
+	Dolphin (const char* monNom, const char* monOrigine) : Animale (monNom), origin (monOrigine){};
+	void display_info(){cout << "Je suis: "<< nom << " , j’ai: " << age << " et je suis de: "<< origine<< endl;};
+
+};
+
+int main()
+{	
+	const char* nom = "anita";
+	const char* origine = "pamplona";
+	Zebra zeb(nom, origine);
+	zeb.set_value(23);
+	zeb.display_info();
+	return 0;
+              
+
+
+               ///********* Exercice 6 ********* ///
+
+
+class Personne
+    {
+        private string nom;
+        private string prenom;
+        private DateTime datenaissance;
+ 
+        public string Nom
+        {
+            get { return nom; }
+            set { nom = value; }
+        }
+        public string Prenom
+        {
+            get { return prenom; }
+            set { prenom = value; }
+        }
+        public DateTime Datenaissance
+        {
+            get { return datenaissance; }
+            set { datenaissance = value; }
+        }
+ 
+        public Personne(string n, string p, DateTime dn)
+        {
+            nom = n;
+            prenom = p;
+            datenaissance = dn;
+        }
+ 
+        public virtual void Afficher()
+        {
+            Console.Out.Write("Nom: " + nom + " Prénom: " + prenom + " Date de naissance: " + datenaissance);
+        }
+    }
+La classe Employé:
+class Employe : Personne
+    {
+        private double salaire;
+ 
+        public double Salaire
+        {
+            get { return salaire; }
+            set { salaire = value; }
+        }
+ 
+        public Employe(string n, string p, DateTime dn, double s)
+            : base(n, p, dn)
+        {
+            salaire = s;
+        }
+ 
+        public override void Afficher()
+        {
+            base.Afficher();
+            Console.Out.WriteLine(" Salaire: " + salaire);
+        }
+    }
+La classe Chef:
+class Chef : Employe
+    {
+        private string service;
+ 
+        public string Service
+        {
+            get { return service; }
+            set { service = value; }
+        }
+ 
+        public Chef(string n, string p, DateTime dn, double s, string ser)
+            : base(n, p, dn, s)
+        {
+            service = ser;
+        }
+ 
+        public override void Afficher()
+        {
+            base.Afficher();
+            Console.Out.Write(" Service: " + service);
+        }
+    }
+La classe Directeur:
+class Directeur : Chef
+    {
+        private string societe;
+ 
+        public string Societe
+        {
+            get { return societe; }
+            set { societe = value; }
+        }
+ 
+        public Directeur(string n, string p, DateTime dn, double s, string ser, string soc) 
+            :base(n, p, dn, s, ser)
+        {
+            societe = soc;
+        }
+ 
+        public override void Afficher()
+        {
+            base.Afficher();
+            Console.Out.Write(" Société: " + societe);
+        }
+    }
+Le programme de test:
+class Program
+    {
+        static void Main(string[] args)
+        {
+            Personne[] P = new Personne[8];
+            //Des Affectations utilisant le concept du polymorphisme
+            P[0] = new Employe("NOM1", "PRENOM1", new DateTime(1985, 3, 4), 9000);
+            P[1] = new Employe("NOM2", "PRENOM2", new DateTime(1984, 3, 4), 10000);
+            P[2] = new Employe("NOM3", "PRENOM3", new DateTime(1983, 3, 4), 8000);
+            P[3] = new Employe("NOM4", "PRENOM4", new DateTime(1982, 3, 4), 11000);
+            P[4] = new Employe("NOM5", "PRENOM5", new DateTime(1981, 3, 4), 7000);
+            P[5] = new Chef("NOM6", "PRENOM6", new DateTime(1988, 7, 6), 9000, "SERVICE1");
+            P[6] = new Chef("NOM7", "PRENOM7", new DateTime(1984, 7, 6), 9000, "SERVICE2");
+            P[7] = new Directeur("NOM8", "PRENOM8", new DateTime(1988, 7, 6), 9000, "SERVICE3","SOCIETE1");
+ 
+            for (int i = 0; i < P.Length; i++)
+            {
+                P[i].Afficher();      //Appel d'une méthode polymorphique (qui prend une nouvelle forme dans les classes dérivées)
+                Console.Out.WriteLine(""); 
+            }
+ 
+            foreach (Personne p in P)
+            {
+                p.Afficher();
+                Console.Out.WriteLine("");
+            }
+ 
+            Console.ReadKey();
+       
+
+
+               ///********* Exercice 7 ********* ///
+
+               
+
+#include <iostream>
+class Vector3D {
+    public:
+    vector3D() {x=0.0;y=0.0;z=0.0;}
+    vector3D(doucle xx,double yy,double zz){x=xx;y=yy;z=zz;}
+    vector3D sum(const vector3D &v) const{return vector3D(x+v.x,y+v.y,z+v.z);}
+    vector3D product(double k)  const {return vector3D(k*x,k*y,k*z);}
+    double scalar(const vector3D &v) const{return x*v.x+y*v.y+z*v.z;} 
+    ostream &print(ostream &s)  const{return  s  <<'['<<x<<','<<y<<','<<z)
+};
+    vector3D operator+(const   vector3D &v1,const vector3D &v2) {return v1.sum(v2)};
+    double operator  * (const vector3D &v1,const vector3D  &v2)  {return v1.scalar(v2)};
+    vector3D operator * (const vector3D &v,double  k){return v.product(k);}
+    ostream &operator << (ostream &s,const vector3D &v) {v.print(s);return s;}
+    int main (int argc,char **argv){
+        vector3D v(1,2,3),w(-1.0,-1.0,1.0);
+        cout << v << ''  << w  << '\n';
+        cout << (v*w) << '' << (3*v+5*w+(v*w)w << '\n');
+    }
