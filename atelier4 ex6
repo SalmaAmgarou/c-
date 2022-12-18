@@ -1,0 +1,40 @@
+//////////////////////// EXERCICE 6 ///////////////////////////////
+
+// Voici une version modifiee du programme
+
+#include <iostream>
+#include <stdexcept> // Bibliothèque pour les exceptions
+using namespace std;
+
+class Test{
+public:
+static int tableau[] ;
+public :
+static int division(int indice, int diviseur){
+// Vérifie si le diviseur est différent de 0 avant de procéder à la division
+if (diviseur == 0) {
+throw runtime_error("Erreur : division par 0"); // Déclenche une exception de type runtime_error
+}
+return tableau[indice]/diviseur;
+}
+};
+
+int Test::tableau[] = {17, 12, 15, 38, 29, 157, 89, -22, 0, 5} ;
+
+int main() {
+int x, y;
+cout << "Entrez l’indice de l’entier à diviser: " << endl;
+cin >> x ;
+cout << "Entrez le diviseur: " << endl;
+cin >> y ;
+
+// Utilisation de la structure try-catch pour gérer les exceptions
+try {
+cout << "Le résultat de la division est: "<< endl;
+cout << Test::division(x,y) << endl;
+} catch (runtime_error &e) { // Attrape l'exception de type runtime_error
+cout << e.what() << endl; // Affiche le message d'erreur de l'exception
+}
+
+return 0;
+}
