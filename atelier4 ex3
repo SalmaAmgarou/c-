@@ -1,0 +1,91 @@
+
+////////////////////////// EXERCICE 3 ///////////////////////////////
+
+
+#include <iostream>
+#include <list>
+
+// Tri a bulle
+void bubble_sort(std::list<int>& lst) {
+  bool sorted = false;
+
+  while (!sorted) {
+    sorted = true;
+
+    for (auto it = lst.begin(); it != lst.end(); ++it) {
+      auto next_it = it;
+      ++next_it;
+      if (next_it != lst.end() && *it > *next_it) {
+        std::swap(*it, *next_it);
+        sorted = false;
+      }
+    }
+  }
+}
+
+// Tri par selection
+void selection_sort(std::list<int>& lst) {
+  for (auto it = lst.begin(); it != lst.end(); ++it) {
+    // Find the minimum element in the unsorted part of the list
+    auto min_it = it;
+    for (auto it2 = it; it2 != lst.end(); ++it2) {
+      if (*it2 < *min_it) {
+        min_it = it2;
+      }
+    }
+
+    // remplacer l'element min avec l'element actuel
+    std::swap(*it, *min_it);
+  }
+}
+
+// Tri par insertion
+void insertion_sort(std::list<int>& lst) {
+  for (auto it = lst.begin(); it != lst.end(); ++it) {
+    // Find the position where the current element should be inserted
+    auto it2 = it;
+    --it2;
+    while (it2 != lst.begin() && *it < *it2) {
+      --it2;
+    }
+    ++it2;
+
+    // Insertion de l'element actuel a sa position correcte
+    if (it2 != it) {
+      lst.splice(it2, lst, it);
+    }
+  }
+}
+
+int main() {
+  std::list<int> lst;
+
+  std::cout << "Enter a list of integers: ";
+  int n;
+  while (std::cin >> n) {
+    lst.push_back(n);
+  }
+
+  std::cout << "Entrez le type de tri a utiliser ( bulle, insertion, selection): ";
+  std::string algorithm;
+  std::cin >> algorithm;
+
+  if (algorithm == "bulle") {
+    bubble_sort(lst);
+  } else if (algorithm == "selection") {
+    selection_sort(lst);
+  } else if (algorithm == "insertion") {
+    insertion_sort(lst);
+     } else {
+    std::cout << "Tri invalide" << std::endl;
+    return 1;
+  }
+
+  // Retourner la liste triee
+  for (int x : lst) {
+    std::cout << x << " ";
+  }
+  std::cout << std::endl;
+
+  return 0;
+}
