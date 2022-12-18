@@ -1,0 +1,40 @@
+/////////////////////////////// EXERCICE 2 ///////////////////////////////////
+
+#include <iostream>
+#include <string>
+
+int main() {
+  std::string date_time_string;
+
+  std::cout << "Entrer la date et le temps en format string (JJMMAAAAHHNN): ";
+  std::cin >> date_time_string;
+
+  // Extracter le champ du jour
+  std::string jour_string = date_time_string.substr(0, 2);
+  int jour = std::stoi(jour_string);
+
+ // Extracter le champ du mois
+  std::string mois_string = date_time_string.substr(2, 2);
+  int mois = std::stoi(mois_string);
+
+  // Extracter le champ de l'annee
+  std::string annee_string = date_time_string.substr(4, 4);
+  int annee = std::stoi(annee_string);
+
+  // Extracter le champ de l'heure
+  std::string heure_string = date_time_string.substr(8, 2);
+  int heure = std::stoi(heure_string);
+
+  // Extracter le champ de la minute
+  std::string minute_string = date_time_string.substr(10, 2);
+  int minute = std::stoi(minute_string);
+
+  // Print the extracted fields
+  std::cout << "Jour: " << jour << std::endl;
+  std::cout << "Mois: " << mois << std::endl;
+  std::cout << "Annee: " << annee << std::endl;
+  std::cout << "Heure: " << heure << std::endl;
+  std::cout << "Minute: " << minute << std::endl;
+
+  return 0;
+}
