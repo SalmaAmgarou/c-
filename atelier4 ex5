@@ -1,0 +1,67 @@
+/////////////////////  EXERCICE 5 //////////////////////////
+
+
+#include <iostream>
+#include <set>
+#include <vector>
+#include <list>
+#include <array>
+#include <string>
+
+template <typename Iterator, typename T>
+bool search(Iterator begin, Iterator end, const T& value) {
+  for (auto it = begin; it != end; ++it) {
+    if (*it == value) {
+      return true;
+    }
+  }
+  return false;
+}
+
+int main() {
+  // Créer un set paramètre pour le type int
+  std::set<int> set;
+  for (int i = 1; i <= 100; ++i) {
+    set.insert(i);
+  }
+
+  // Rechercher la valeur 50 dans le set
+  if (search(set.begin(), set.end(), 50)) {
+    std::cout << "Valeur trouvee" << std::endl;
+  } else {
+    std::cout << "Valeur pas trouvee" << std::endl;
+  }
+
+  // Creer un vecteur de strings
+  std::vector<std::string> vec = {"hello", "world", "foo", "bar"};
+
+  // Chercher la string "foo" dans le vecteur
+  if (search(vec.begin(), vec.end(), "foo")) {
+    std::cout << "String trouvee dans le vecteur" << std::endl;
+  } else {
+    std::cout << "String intouvable dans le vecteur" << std::endl;
+  }
+
+  // Creer une liste d'entiers
+  std::list<int> lst = {1, 2, 3, 4, 5};
+
+  // Cjercher la valeur 3 dans la liste
+  if (search(lst.begin(), lst.end(), 3)) {
+    std::cout << "Valeur trouvee" << std::endl;
+  } else {
+    std::cout << "Valeur introuvable" << std::endl;
+  }
+
+  // Creer u tableau de reels
+  std::array<float, 5> arr = {1.0, 2.0, 3.0, 4.0, 5.0};
+
+  // Chercher la valeur 3.0 dans le tableau
+  if (search(arr.begin(), arr.end(), 3.0)) {
+    std::cout << "Valeur trouvee dans le tableau" << std::endl;
+  } else {
+    std::cout << "Valeur introuvable" << std::endl;
+  }
+
+  return 0;
+}
+
