@@ -1,0 +1,768 @@
+///// EXERCICE 1/////
+
+#include <iostream>
+
+class Complex {
+ private:
+  double real_;
+  double imag_;
+
+ public:
+  Complex(double real, double imag) : real_(real), imag_(imag) {}
+
+  double real() const { return real_; }
+  double imag() const { return imag_; }
+
+  Complex operator+(const Complex& other) const {
+    return Complex(real_ + other.real_, imag_ + other.imag_);
+  }
+
+  Complex operator-(const Complex& other) const {
+    return Complex(real_ - other.real_, imag_ - other.imag_);
+  }
+
+  Complex operator*(const Complex& other) const {
+    return Complex(real_ * other.real_ - imag_ * other.imag_,
+                   real_ * other.imag_ + imag_ * other.real_);
+  }
+
+  Complex operator/(const Complex& other) const {
+    double denominator = other.real_ * other.real_ + other.imag_ * other.imag_;
+    return Complex((real_ * other.real_ + imag_ * other.imag_) / denominator,
+                   (imag_ * other.real_ - real_ * other.imag_) / denominator);
+  }
+};
+
+std::ostream& operator<<(std::ostream& os, const Complex& c) {
+  os << c.real() << "+" << c.imag() << "i";
+  return os;
+}
+
+int main() {
+  Complex c1(1, 2);
+  Complex c2(3, 4);
+
+  std::cout << "c1 = " << c1 << std::endl;
+  std::cout << "c2 = " << c2 << std::endl;
+
+  Complex c3 = c1 + c2;
+  std::cout << "c1 + c2 = " << c3 << std::endl;
+
+  Complex c4 = c1 - c2;
+  std::cout << "c1 - c2 = " << c4 << std::endl;
+
+  Complex c5 = c1 * c2;
+  std::cout << "c1 * c2 = " << c5 << std::endl;
+
+  Complex c6 = c1 / c2;
+  std::cout << "c1 / c2 = " << c6 << std::endl;
+
+  return 0;
+}
+
+
+/////////////////////////////// EXERCICE 2 ///////////////////////////////////
+
+#include <iostream>
+#include <string>
+
+int main() {
+  std::string date_time_string;
+
+  std::cout << "Entrer la date et le temps en format string (JJMMAAAAHHNN): ";
+  std::cin >> date_time_string;
+
+  // Extracter le champ du jour
+  std::string jour_string = date_time_string.substr(0, 2);
+  int jour = std::stoi(jour_string);
+
+ // Extracter le champ du mois
+  std::string mois_string = date_time_string.substr(2, 2);
+  int mois = std::stoi(mois_string);
+
+  // Extracter le champ de l'annee
+  std::string annee_string = date_time_string.substr(4, 4);
+  int annee = std::stoi(annee_string);
+
+  // Extracter le champ de l'heure
+  std::string heure_string = date_time_string.substr(8, 2);
+  int heure = std::stoi(heure_string);
+
+  // Extracter le champ de la minute
+  std::string minute_string = date_time_string.substr(10, 2);
+  int minute = std::stoi(minute_string);
+
+  // Print the extracted fields
+  std::cout << "Jour: " << jour << std::endl;
+  std::cout << "Mois: " << mois << std::endl;
+  std::cout << "Annee: " << annee << std::endl;
+  std::cout << "Heure: " << heure << std::endl;
+  std::cout << "Minute: " << minute << std::endl;
+
+  return 0;
+}
+
+////////////////////////// EXERCICE 3 ///////////////////////////////
+
+
+#include <iostream>
+#include <list>
+
+// Tri a bulle
+void bubble_sort(std::list<int>& lst) {
+  bool sorted = false;
+
+  while (!sorted) {
+    sorted = true;
+
+    for (auto it = lst.begin(); it != lst.end(); ++it) {
+      auto next_it = it;
+      ++next_it;
+      if (next_it != lst.end() && *it > *next_it) {
+        std::swap(*it, *next_it);
+        sorted = false;
+      }
+    }
+  }
+}
+
+// Tri par selection
+void selection_sort(std::list<int>& lst) {
+  for (auto it = lst.begin(); it != lst.end(); ++it) {
+    // Find the minimum element in the unsorted part of the list
+    auto min_it = it;
+    for (auto it2 = it; it2 != lst.end(); ++it2) {
+      if (*it2 < *min_it) {
+        min_it = it2;
+      }
+    }
+
+    // remplacer l'element min avec l'element actuel
+    std::swap(*it, *min_it);
+  }
+}
+
+// Tri par insertion
+void insertion_sort(std::list<int>& lst) {
+  for (auto it = lst.begin(); it != lst.end(); ++it) {
+    // Find the position where the current element should be inserted
+    auto it2 = it;
+    --it2;
+    while (it2 != lst.begin() && *it < *it2) {
+      --it2;
+    }
+    ++it2;
+
+    // Insertion de l'element actuel a sa position correcte
+    if (it2 != it) {
+      lst.splice(it2, lst, it);
+    }
+  }
+}
+
+int main() {
+  std::list<int> lst;
+
+  std::cout << "Enter a list of integers: ";
+  int n;
+  while (std::cin >> n) {
+    lst.push_back(n);
+  }
+
+  std::cout << "Entrez le type de tri a utiliser ( bulle, insertion, selection): ";
+  std::string algorithm;
+  std::cin >> algorithm;
+
+  if (algorithm == "bulle") {
+    bubble_sort(lst);
+  } else if (algorithm == "selection") {
+    selection_sort(lst);
+  } else if (algorithm == "insertion") {
+    insertion_sort(lst);
+     } else {
+    std::cout << "Tri invalide" << std::endl;
+    return 1;
+  }
+
+  // Retourner la liste triee
+  for (int x : lst) {
+    std::cout << x << " ";
+  }
+  std::cout << std::endl;
+
+  return 0;
+}
+
+//////////////////////////// EXERCICE 4 ////////////////////////////////
+
+
+#include <iostream>
+#include <list>
+#include <string>
+
+struct Person {
+  std::string last_name;
+  std::string first_name;
+  int age;
+};
+
+// Fonction pour trier la liste des personnes en utilisant le tri en bulle
+void bubble_sort(std::list<Person>& lst) {
+  bool sorted = false;
+
+  while (!sorted) {
+    sorted = true;
+
+    for (auto it = lst.begin(); it != lst.end(); ++it) {
+      auto next_it = it;
+      ++next_it;
+      if (next_it != lst.end() && (*it).last_name > (*next_it).last_name) {
+        std::swap(*it, *next_it);
+        sorted = false;
+      } else if ((*it).last_name == (*next_it).last_name && (*it).first_name > (*next_it).first_name) {
+        std::swap(*it, *next_it);
+        sorted = false;
+      }
+    }
+  }
+}
+
+int main() {
+  std::list<Person> lst;
+
+  std::cout << "Entez le (nom, prenom, age) de la personne:" << std::endl;
+  std::string last_name;
+  while (std::cin >> last_name) {
+       Person p;
+    p.last_name = last_name;
+    std::cin >> p.first_name >> p.age;
+    lst.push_back(p);
+  }
+
+  // trier le liste
+  bubble_sort(lst);
+
+  // retourner la liste triee
+  for (const Person& p : lst) {
+    std::cout << p.last_name << " " << p.first_name << " " << p.age << std::endl;
+  }
+
+  return 0;
+}
+
+/////////////////////  EXERCICE 5 //////////////////////////
+
+
+#include <iostream>
+#include <set>
+#include <vector>
+#include <list>
+#include <array>
+#include <string>
+
+template <typename Iterator, typename T>
+bool search(Iterator begin, Iterator end, const T& value) {
+  for (auto it = begin; it != end; ++it) {
+    if (*it == value) {
+      return true;
+    }
+  }
+  return false;
+}
+
+int main() {
+  // Créer un set paramètre pour le type int
+  std::set<int> set;
+  for (int i = 1; i <= 100; ++i) {
+    set.insert(i);
+  }
+
+  // Rechercher la valeur 50 dans le set
+  if (search(set.begin(), set.end(), 50)) {
+    std::cout << "Valeur trouvee" << std::endl;
+  } else {
+    std::cout << "Valeur pas trouvee" << std::endl;
+  }
+
+  // Creer un vecteur de strings
+  std::vector<std::string> vec = {"hello", "world", "foo", "bar"};
+
+  // Chercher la string "foo" dans le vecteur
+  if (search(vec.begin(), vec.end(), "foo")) {
+    std::cout << "String trouvee dans le vecteur" << std::endl;
+  } else {
+    std::cout << "String intouvable dans le vecteur" << std::endl;
+  }
+
+  // Creer une liste d'entiers
+  std::list<int> lst = {1, 2, 3, 4, 5};
+
+  // Cjercher la valeur 3 dans la liste
+  if (search(lst.begin(), lst.end(), 3)) {
+    std::cout << "Valeur trouvee" << std::endl;
+  } else {
+    std::cout << "Valeur introuvable" << std::endl;
+  }
+
+  // Creer u tableau de reels
+  std::array<float, 5> arr = {1.0, 2.0, 3.0, 4.0, 5.0};
+
+  // Chercher la valeur 3.0 dans le tableau
+  if (search(arr.begin(), arr.end(), 3.0)) {
+    std::cout << "Valeur trouvee dans le tableau" << std::endl;
+  } else {
+    std::cout << "Valeur introuvable" << std::endl;
+  }
+
+  return 0;
+}
+
+
+
+//////////////////////// EXERCICE 6 ///////////////////////////////
+
+// Voici une version modifiee du programme
+
+#include <iostream>
+#include <stdexcept> // Bibliothèque pour les exceptions
+using namespace std;
+
+class Test{
+public:
+static int tableau[] ;
+public :
+static int division(int indice, int diviseur){
+// Vérifie si le diviseur est différent de 0 avant de procéder à la division
+if (diviseur == 0) {
+throw runtime_error("Erreur : division par 0"); // Déclenche une exception de type runtime_error
+}
+return tableau[indice]/diviseur;
+}
+};
+
+int Test::tableau[] = {17, 12, 15, 38, 29, 157, 89, -22, 0, 5} ;
+
+int main() {
+int x, y;
+cout << "Entrez l’indice de l’entier à diviser: " << endl;
+cin >> x ;
+cout << "Entrez le diviseur: " << endl;
+cin >> y ;
+
+// Utilisation de la structure try-catch pour gérer les exceptions
+try {
+cout << "Le résultat de la division est: "<< endl;
+cout << Test::division(x,y) << endl;
+} catch (runtime_error &e) { // Attrape l'exception de type runtime_error
+cout << e.what() << endl; // Affiche le message d'erreur de l'exception
+}
+
+return 0;
+}
+
+//////////////////////////////////// EXERCICE & //////////////////////////////////
+
+#include <iostream>
+#include <iomanip>
+using namespacestd;
+
+class Point
+{
+private: // accessible par personne même pas PointCouleur
+double x;
+double y;
+protected: // accessible par personne sauf PointCouleur
+string nom;
+public: // accessible par tout le monde
+Point(double x=0.0, double y=0.0, string nom="");
+// Accesseurs
+double getX() const;
+void setX(double x);
+double getY() const;
+void setY(double y);
+string getNom() const;
+void setNom(string nom);
+// Service(s)
+void afficher() const;
+};
+Point::Point(double x, double y, string nom) : x(x), y(y), nom(nom)
+{
+}
+double Point::getX() const
+{
+return x;
+}
+void Point::setX(double x)
+{
+this->x = x;
+}
+double Point::getY() const
+{
+return y;
+}
+void Point::setY(double y)
+{
+this->y = y;
+}
+string Point::getNom() const
+{
+return nom;
+}
+void Point::setNom(string nom)
+{
+this->nom = nom;
+}
+void Point::afficher() const
+{
+cout << "<" << nom << ":" << x << "," << y << ">";
+}
+class PointCouleur : public Point
+{
+private: // accessible par personne même pas Point
+unsigned int couleur;
+public: // accessible par tout le monde
+PointCouleur(double x=0.0, double y=0.0, string nom="", unsigned int couleur=0);
+// Accesseur(s)
+unsigned int getCouleur() const;
+void setCouleur(unsigned int couleur);
+// Service(s)
+void afficher() const; // redéfinition par surcharge
+// Tests des accès aux membres hérités
+void modifierX(double x);
+void modifierY(double y);
+void modifierNom(string nom);
+};
+// Appeler en premier le contructeur de la classe mère (ici Point)
+PointCouleur::PointCouleur(double x, double y, string nom, unsigned int couleur) : Point(x,
+y, nom), couleur(couleur)
+{
+}
+unsigned int PointCouleur::getCouleur() const
+{
+return couleur;
+}
+void PointCouleur::setCouleur(unsigned int couleur)
+{
+this->couleur = couleur;
+}
+void PointCouleur::afficher() const
+{
+Point::afficher(); // appel de la méthode afficher de la classe mère Point
+cout << " [#" << std::hex << std::uppercase << couleur << "]"; // ajoute l’affichage de la couleur en hexa
+}
+void PointCouleur::modifierX(double x)
+{
+//this->x = x; // erreur: ’double Point::x’ is private
+}
+void PointCouleur::modifierY(double y)
+{
+//this->y = y; // erreur: ’double Point::y’ is private
+}
+void PointCouleur::modifierNom(string nom)
+{
+this->nom = nom; // accessible par héritage car nom est protected
+}
+int main()
+{
+Point p1; // ou Point p1(0,0,"");
+//p1.x = 1; // erreur: ’double Point::x’ is private
+//p1.nom = "A"; // erreur: ’std::string Point::nom’ is protected
+p1.afficher(); // produit : <:0,0>
+Point p2(2, 2, "P2");
+p2.afficher(); // produit : <P2:2,2>
+PointCouleur p3(2.5, 5.5, "P3", 0xFFFFFFFF);
+p3.afficher(); // produit : <P3:2.5,5.5> [#FFFFFFFF]
+// Tests :
+p3.setX(1.2); // accessible par héritage : PointCouleur est un Point
+p3.setY(3.5); // idem
+p3.afficher(); // produit : <P3:1.2,3.5> [#FFFFFFFF]
+p3.modifierX(0.); // voir la méthode
+p3.modifierY(0.); // idem
+p3.modifierNom("O"); // idem
+p3.afficher(); // produit : <O:1.2,3.5> [#FFFFFFFF]
+return 0;
+}
+
+
+
+/////////////////////////////////// Exercice 8 //////////////////////////////////
+
+#include <iostream>
+#include <list>
+
+using namespace std;
+
+
+class Animal{
+    protected:
+    string nom;
+    int age;
+    string genre;
+
+    public:
+    void setNom(string nom);
+    void setAge(int age);
+    void setGenre(string genre);
+    string getNom();
+    int getAge();
+    string getGenre();
+};
+
+void Animal::setNom(string nom){
+    this ->nom = nom;
+}
+void Animal::setAge(int age){
+    this ->age = age;
+}
+void Animal::setGenre(string genre){
+    this ->genre = genre;
+}
+string Animal::getNom(){
+    return this ->nom;
+}
+int Animal::getAge(){
+    return this ->age;
+}
+string Animal::getGenre(){
+    return  this ->genre;
+}
+
+class Element{
+    private:
+    string nom;
+    string type;
+    public:
+    void setNom(string nom){
+        this->nom = nom;
+    }
+    void setType(string type){
+        this -> type = type;
+    }
+    string getNom(){
+        return this->nom;
+    }
+    string getType(){
+        return this -> type;
+    }
+};
+
+class Repas{
+    private:
+    string nom;
+    int heure;
+    string description;
+    list <Element> elementsList;
+    public:
+    void setNom(string nom){
+        this->nom = nom;
+    }
+    void setHeure(int heure){
+        this->heure = heure;
+    }
+    void setDescription(string description){
+        this->description = description;
+    }
+    void setElementsList(list <Element> elementsList){
+        this->elementsList = elementsList;
+    }
+    string getNom(){
+        return this->nom;
+    }
+    int getHeure(){
+        return this->heure;
+    }
+    string getDescription(){
+        return this->description;
+    }
+    list <Element> getElementsList(){
+        return this->elementsList;
+    }
+};
+
+class Chat: public Animal{
+    private:
+    string type;
+    Repas chatRepas;
+    public:
+    void setType(string type){
+        this -> type = type;
+    }
+    void setRepas(Repas chatRepas){
+        this->chatRepas = chatRepas;
+    }
+    string getType(){
+        return this -> type;
+    }
+    Repas getRepas(){
+        return this->chatRepas;
+    }
+    void sauter(){
+        cout << "\n";
+    }
+};
+
+
+class Race{
+    protected:
+    string specifite;
+    bool isRaceHybride(){
+        if (specifite=="hybride"){
+            return true;
+        }
+        return false;
+    }
+    public:
+    void setSpecifite(string specifite){
+        this->specifite = specifite;
+    }
+    string getSpecifite(){
+        return this->specifite;
+    }
+};
+
+
+class Entraineur;
+class Chien:public Animal,Race{
+    private:
+    string taille;
+    list <Entraineur> entraineurList;
+    public:
+    void setTaille(string taille){
+        this->taille = taille;
+    }
+    void setEntraineurList(list <Entraineur> entraineurList){
+        this->entraineurList = entraineurList; 
+    }
+    string getTaille(){
+        return this->taille;
+    }
+    list <Entraineur> getEntraineurList(){
+        return this->entraineurList;
+    }
+    bool isChass3(){
+        return true;
+    }
+};
+
+class Entraineur{
+    private:
+    string nom;
+    string description;
+    list <Chien> chienList;
+    public:
+    void setNom(string nom){
+        this->nom = nom;
+    }
+    void setDescription(string description){
+        this->description = description;
+    }
+    void setChienList(list <Chien> chienList){
+        this->chienList = chienList;
+    }
+    string getNom(){
+        return this->nom;
+    }
+    string getDescription(){
+        return this->description;
+    }
+    list <Chien> getChienList(){
+        return this->chienList;
+    }
+};
+
+class Competition{
+    private:
+    string date;
+    string nom;
+    Chien chien;
+    Entraineur entraineur;
+    public:
+    int ordre;
+    void setDate(string date){
+        this->date = date;
+    }
+    void setNom(string nom){
+        this->nom = nom;
+    }
+    void setChien(Chien chien){
+        this->chien = chien;
+    }
+    void setEntraineur(Entraineur entraineur){
+        this->entraineur = entraineur;
+    }
+    string getDate(){
+        return this->date;
+    }
+    string getNom(){
+        return this->nom;
+    }
+    Chien getChien(){
+        return this->chien;
+    }
+    Entraineur getEntraineur(){
+        return this->entraineur;
+    }
+};
+
+int main()
+{
+    list <Element> myElements;
+    Element el1,el2;
+    el1.setNom("Elem 1");
+    el1.setType("Typ 1");
+    el2.setNom("Elem 2");
+    el2.setType("Typ2");
+    myElements.push_back(el1);
+    myElements.push_back(el2);
+    Repas myRepas;
+    myRepas.setNom("Rep 1");
+    myRepas.setHeure(3);
+    myRepas.setDescription("Descri 1");
+    myRepas.setElementsList(myElements);
+    Chat tom;
+    tom.setNom("Tom");
+    tom.setGenre("male");
+    tom.setAge(3);
+    tom.setRepas(myRepas);
+    tom.setType("blue");
+    tom.sauter();
+    Chien bobby;
+    bobby.setNom("bobby");
+    bobby.setGenre("male");
+    bobby.setAge(5);
+    bobby.setTaille("4");
+    list <Chien> chienList;
+    chienList.push_back(bobby);
+    Entraineur myEntraineur;
+    myEntraineur.setNom("simeone");
+    myEntraineur.setChienList(chienList);
+    myEntraineur.setDescription("ATM COACH COACH");
+    list <Entraineur> entraineurList;
+    entraineurList.push_back(myEntraineur);
+    bobby.setEntraineurList(entraineurList);
+    Competition firstCompetition;
+    firstCompetition.setNom("copa del rey ");
+    firstCompetition.setDate("25/08/2010");
+    firstCompetition.setChien(bobby);
+    firstCompetition.setEntraineur(myEntraineur);
+
+    
+
+    cout << "Competition\n";
+    cout << firstCompetition.getNom() << "\n";
+    cout << firstCompetition.getDate() << "\n";
+    cout << firstCompetition.getEntraineur().getNom() << "\n";
+    cout << firstCompetition.getEntraineur().getDescription() << "\n";
+    cout << firstCompetition.getChien().getNom() << "\n";
+
+
+    list <Element>::iterator elementIterator;
+    cout << "Iterator\n";
+    elementIterator = myRepas.getElementsList().begin(); 
+    cout << elementIterator->getNom() << "\n";
+    cout << elementIterator->getType() << "\n";
+    
+    
+    return 0;
+}
+
