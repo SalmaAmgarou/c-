@@ -1,0 +1,56 @@
+//////////////////////////// EXERCICE 4 ////////////////////////////////
+
+
+#include <iostream>
+#include <list>
+#include <string>
+
+struct Person {
+  std::string last_name;
+  std::string first_name;
+  int age;
+};
+
+// Fonction pour trier la liste des personnes en utilisant le tri en bulle
+void bubble_sort(std::list<Person>& lst) {
+  bool sorted = false;
+
+  while (!sorted) {
+    sorted = true;
+
+    for (auto it = lst.begin(); it != lst.end(); ++it) {
+      auto next_it = it;
+      ++next_it;
+      if (next_it != lst.end() && (*it).last_name > (*next_it).last_name) {
+        std::swap(*it, *next_it);
+        sorted = false;
+      } else if ((*it).last_name == (*next_it).last_name && (*it).first_name > (*next_it).first_name) {
+        std::swap(*it, *next_it);
+        sorted = false;
+      }
+    }
+  }
+}
+
+int main() {
+  std::list<Person> lst;
+
+  std::cout << "Entez le (nom, prenom, age) de la personne:" << std::endl;
+  std::string last_name;
+  while (std::cin >> last_name) {
+       Person p;
+    p.last_name = last_name;
+    std::cin >> p.first_name >> p.age;
+    lst.push_back(p);
+  }
+
+  // trier le liste
+  bubble_sort(lst);
+
+  // retourner la liste triee
+  for (const Person& p : lst) {
+    std::cout << p.last_name << " " << p.first_name << " " << p.age << std::endl;
+  }
+
+  return 0;
+}
